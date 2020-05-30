@@ -22,8 +22,8 @@ export const sendCollectionToAlgolia = functions.runWith({ memory: '2GB', timeou
     const record = {
       objectID: doc.id,
       title: document.title,
+      date: document.created._seconds,
       shortDescription: document.shortDescription,
-      wysiwyg: document.wysiwyg,
       category: document.category,
       image: document.image,
       rating: document.rating
@@ -56,8 +56,8 @@ async function saveDocumentInAlgolia(snapshot: any) {
         const data = {
           objectID: snapshot.id,
           title: record.title,
+          date: record.created._seconds,
           shortDescription: record.shortDescription,
-          wysiwyg: record.wysiwyg,
           category: record.category,
           image: record.image,
           rating: record.rating
