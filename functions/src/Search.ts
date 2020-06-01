@@ -42,7 +42,23 @@ export const collectionOnCreate = functions.firestore.document('companies/{uid}'
 });
 
 export const collectionOnUpdate = functions.firestore.document('companies/{uid}').onUpdate(async (change, context) => {
-  await updateDocumentInAlgolia(change);
+  const before = change.before.data() || {}
+  const after = change.after.data() || {}
+
+  const watch = [
+    'title',
+    'shortDescription',
+    'category',
+    'image',
+    'rating'
+  ]
+
+  for (let i = 0; i < watch.length; ++i) {
+    if (before[watch[i]] !== after[watch[i]]) {
+      await updateDocumentInAlgolia(change);
+      break;
+    }
+  }
 });
 
 export const collectionOnDelete = functions.firestore.document('companies/{uid}').onDelete(async (snapshot, context) => {
