@@ -50,7 +50,8 @@ export const collectionOnUpdate = functions.firestore.document('companies/{uid}'
     'shortDescription',
     'category',
     'image',
-    'rating'
+    'rating',
+    'isShown'
   ]
 
   for (let i = 0; i < watch.length; ++i) {
